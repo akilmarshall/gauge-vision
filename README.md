@@ -2,10 +2,41 @@
 
 Several video feeds of similar pressure gauges in operation will be available, the goal is to write software capable of turing that video stream into a stream of values representing the pressure reading of the gauge. 
 
+## Todo
+
+- write an object for training, (requires detections param) computes look up table
+- write an object that uses the look up table (requires detections param) and computes pressures from images
+- turn notebook block diagram into a dot(graphviz) diagram
+
 ## High Level Implementation Concerns
 
 Ultimately the work in this repo will update a variable in the EPICS/DRAMA systems representing some compressor. 
 Thus the run time of the algorithm should be reduced as much as possible and can be used as a measure of success when comparing algorithms or implementations.
+
+## Training
+
+The goal of training is to produce a look up table (theta -> pressure), I believe more information is necessary since theta is in (0, pi) Hough space.
+Perhaps the look up table (r, theta) -> pressure is ok?
+Currently it is (\_, theta) -> pressure.
+
+Each gauge will require a set of tuned **detection parameters**.
+These **detection parameters** are necessary for training and using the resulting look up table.
+
+### detections parameters 
+
+Taken into consideration here are the absolute limits of the gauge, lighting, needle geometry, etc.
+Essentially **environmental parameters** that is parameters that represent the context of the actual environment.
+
+- Implemented with a named tuple?
+
+### look up table
+
+- Implemented as a dict?
+
+## Operation
+
+With a set of known **detection parameters** and pressure look up table, real time usage is simply applying the known good parameters to *quickly* compute the current pressure from an image with the look up table.
+
 
 ## Image Processing
 
@@ -24,6 +55,9 @@ The image is blurred using cv2.GaussianBlur.
 
 - [tutorial\_py\_filtering](https://docs.opencv.org/4.x/d4/d13/tutorial_py_filtering.html)
 - [cv2.GaussianBlur()](https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#gaabe8c836e97159a9193fb0b11ac52cf1)
+
+- gauss blur run time: 0.0024826526641845703
+- bilateral filter run time: 0.07968306541442871
 
 ### CHT
 

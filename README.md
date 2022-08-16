@@ -25,13 +25,6 @@ The goal of training is to produce a look up table (theta -> pressure), I believ
 Perhaps the look up table (r, theta) -> pressure is ok?
 Currently it is (\_, theta) -> pressure.
 
-## Detect (object) 
-
-Taken into consideration here are the absolute limits of the gauge, lighting, needle geometry, etc.
-Essentially **environmental parameters** that is parameters that represent the context of the actual environment.
-
-- Implemented with a named tuple?
-
 ### look up table
 
 - Implemented as a dict?

@@ -13,16 +13,19 @@ Several video feeds of similar pressure gauges in operation will be available, t
 Ultimately the work in this repo will update a variable in the EPICS/DRAMA systems representing some compressor. 
 Thus the run time of the algorithm should be reduced as much as possible and can be used as a measure of success when comparing algorithms or implementations.
 
+## Detect (object)
+
+This object encapsulates the environmentally sensitive parameters related to image pre processing steps as well as the Hough transform applied.
+
+Allows a set of _good_ parameters to be reused/communicated. 
+
 ## Training
 
 The goal of training is to produce a look up table (theta -> pressure), I believe more information is necessary since theta is in (0, pi) Hough space.
 Perhaps the look up table (r, theta) -> pressure is ok?
 Currently it is (\_, theta) -> pressure.
 
-Each gauge will require a set of tuned **detection parameters**.
-These **detection parameters** are necessary for training and using the resulting look up table.
-
-### detections parameters 
+## Detect (object) 
 
 Taken into consideration here are the absolute limits of the gauge, lighting, needle geometry, etc.
 Essentially **environmental parameters** that is parameters that represent the context of the actual environment.
@@ -35,8 +38,7 @@ Essentially **environmental parameters** that is parameters that represent the c
 
 ## Operation
 
-With a set of known **detection parameters** and pressure look up table, real time usage is simply applying the known good parameters to *quickly* compute the current pressure from an image with the look up table.
-
+With a Detection object and pressure look up table, real time usage is simply applying the known good parameters to *quickly* compute the current pressure from an image with the look up table.
 
 ## Image Processing
 
@@ -85,5 +87,3 @@ Currently using cv2.HoughLines with some results, more parameter tuning needs to
 
 - [tutorial\_hough\_lines](https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html)
 - [cv2.HoughLines()](https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html#ga46b4e588934f6c8dfd509cc6e0e4545a)
-
-

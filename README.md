@@ -13,6 +13,10 @@ Several video feeds of similar pressure gauges in operation will be available, t
 Ultimately the work in this repo will update a variable in the EPICS/DRAMA systems representing some compressor. 
 Thus the run time of the algorithm should be reduced as much as possible and can be used as a measure of success when comparing algorithms or implementations.
 
+## Operation Description
+
+Instead of processing a video stream instead consider processing a single image as quickly as possible even if video data is available.
+
 ## Detect (object)
 
 This object encapsulates the environmentally sensitive parameters related to image pre processing steps as well as the Hough transform applied.
@@ -41,7 +45,7 @@ With some level of detail I describe the steps required to process a single fram
 
 Currently I have ~15 seconds of cell phone camera video of each dial in operation, they look equivalent (values ranges are the same and the ticks seem to be positioned at the same angle, i.e. 350 occurs at angle theta on both dials) despite their markings differing superficially.
 
-these files are  in carbon:~/Project/gauge-vision/example/\*.mp4
+Some examples can be found [here](https://imgur.com/a/AmQpacS)
 
 ### Blur
 
@@ -62,6 +66,10 @@ I am using the cv2.HoughCircles implementation.
 - [tutorial\_py\_houghcircles](https://docs.opencv.org/4.x/da/d53/tutorial_py_houghcircles.html)
 - [cv2.HoughCircles()](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d)
 
+### Crop
+
+With the values from CHT the raw image is cropped to isolate the gauge's face simplifying the task.
+
 ### Edge Detection
 
 Edge detection is being done as a preprocessing step for the line detection step.
@@ -72,7 +80,7 @@ Results in a binary image.
 - [tutorial\_py\_canny](https://docs.opencv.org/4.x/da/d22/tutorial_py_canny.html)
 - [cv2.Canny()](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga04723e007ed888ddf11d9ba04e2232de)
 
-### Line Detection
+### Line Detection (needle detection)
 
 Line detection is being done specifically to detect the angle (in Q1) and  orientation.
 

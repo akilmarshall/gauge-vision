@@ -117,6 +117,18 @@ class Detect:
             return int(x), int(y), int(r)
         return None
 
+    def LHTP(self, img: np.ndarray):
+        """
+        Linear Hough Transform Probabilistic.
+        A generator for tuple pairs describing the detected lines.
+
+        returns: [((a, b), (c, d))]
+        """
+        result = cv.HoughLinesP(img, self.rho, self.theta, self.threshold)
+        if result is not None:
+            for [[a, b, c, d]] in result:
+                yield (int(a), int(b)), (int(c), int(d))
+
     def LHT(self, img: np.ndarray):
         """
         Linear Hough Transform.
@@ -181,5 +193,6 @@ detect_1 = Detect(kernel=(9, 9), sigma=3, threshold=125)  # known good params fo
 detect_2 = Detect(kernel=(15, 15), sigma=2, threshold=175)  # known good params for example/2.png
 
 # find_and_plot_gauge(img, detect)
-find_and_plot_needle(img_1, detect_1, fname='test 1.png')
-find_and_plot_needle(img_2, detect_2, fname='test 2.png')
+print('Hough Transform')
+find_and_plot_needle(img_1, detect_1, fname='1.png')
+find_and_plot_needle(img_2, detect_2, fname='2.png')

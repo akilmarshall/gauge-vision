@@ -41,6 +41,12 @@ With a Detection object and pressure look up table, real time usage is simply ap
 
 With some level of detail I describe the steps required to process a single frame (image) containing a pressure gauge and read it's current value.
 
+- Compute the spatial position of the gauge (x, y, r)
+- Crop the image to the gauge using (x, y, r)
+- Apply blur
+- Apply edge finding (emphasizing)
+- Compute the spatial position of the needle
+
 ### Image Acquisition (Pre Step)
 
 Currently I have ~15 seconds of cell phone camera video of each dial in operation, they look equivalent (values ranges are the same and the ticks seem to be positioned at the same angle, i.e. 350 occurs at angle theta on both dials) despite their markings differing superficially.
@@ -49,14 +55,10 @@ Some examples can be found [here](https://imgur.com/a/AmQpacS)
 
 ### Blur
 
-I believe this step is necessary for the performance of the circle Hough Transform (CHT).
-The image is blurred using cv2.GaussianBlur.
+cv2.GaussianBlur
 
 - [tutorial\_py\_filtering](https://docs.opencv.org/4.x/d4/d13/tutorial_py_filtering.html)
 - [cv2.GaussianBlur()](https://docs.opencv.org/4.x/d4/d86/group__imgproc__filter.html#gaabe8c836e97159a9193fb0b11ac52cf1)
-
-- gauss blur run time: 0.0024826526641845703
-- bilateral filter run time: 0.07968306541442871
 
 ### CHT
 
@@ -65,10 +67,6 @@ I am using the cv2.HoughCircles implementation.
 
 - [tutorial\_py\_houghcircles](https://docs.opencv.org/4.x/da/d53/tutorial_py_houghcircles.html)
 - [cv2.HoughCircles()](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d)
-
-### Crop
-
-With the values from CHT the raw image is cropped to isolate the gauge's face simplifying the task.
 
 ### Edge Detection
 

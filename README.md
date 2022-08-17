@@ -1,6 +1,6 @@
 # gauge-vision
 
-Several video feeds of similar pressure gauges in operation will be available, the goal is to write software capable of turing that video stream into a stream of values representing the pressure reading of the gauge. 
+Several video feeds of similar pressure gauges in operation will be available, the goal is to write software capable of turing that video stream into a stream of values representing the pressure readings of the gauge. 
 
 <p align="center">
 <img src=https://imgur.com/qmYCjDS.png alt="" width="250"/>
@@ -11,12 +11,10 @@ Several video feeds of similar pressure gauges in operation will be available, t
 <img src=https://imgur.com/Ijun0Cu.png alt="" width="250"/>
 </p>
 
-
 ## Todo
 
 - write an object for training, (requires detections param) computes look up table
 - write an object that uses the look up table (requires detections param) and computes pressures from images
-- turn notebook block diagram into a dot(graphviz) diagram
 
 ## High Level Implementation Concerns
 

@@ -40,7 +40,7 @@ class Detect:
             p2=150,
             kernel=(9, 9),
             sigma=1,
-            rho=1,
+            rho=1.5,
             theta=pi / 180,
             threshold=150,
             t1=50,
@@ -104,7 +104,6 @@ class Detect:
         """
         return cv.Canny(img, self.t1, self.t2, edges, self.aperture)
 
-
     def CHT(self, img: np.ndarray):
         """
         Circle Hough Transform.
@@ -117,7 +116,6 @@ class Detect:
             [[[x, y, r]]] = result
             return int(x), int(y), int(r)
         return None
-
 
     def LHT(self, img: np.ndarray):
         """
@@ -141,6 +139,7 @@ class Detect:
 # helper color variables for plotting functions
 red = (0, 0, 255)
 green = (0, 255, 0)
+white = (255, 255, 255)
 
 
 def find_and_plot_gauge(img, detect: Detect, fname: str='out.png'):
@@ -156,6 +155,7 @@ def find_and_plot_gauge(img, detect: Detect, fname: str='out.png'):
     cv.imwrite(fname, img_copy)
 
 
+@timing
 def find_and_plot_needle(img, detect: Detect, fname: str='out.png'):
     """An example of the entire image processing pipeline, except the result is used to plot the detected needle. """
     result = detect.CHT(img)
@@ -166,17 +166,20 @@ def find_and_plot_needle(img, detect: Detect, fname: str='out.png'):
         img = detect.blur(img)
         img = detect.edge_detection(img)
         for (a, b), (c, d) in detect.LHT(img): 
-            # draw the detected line in red
+            # draw the detected line
             cv.line(img_copy, (a, b), (c, d), red, 3, cv.LINE_AA)
 
-        cv.imwrite('out.png', img_copy)
+        cv.imwrite(fname, img_copy)
     else:
         print('no gauge found')
 
 
-img = cv.imread('example/2.png', 0)
-detect = Detect(kernel=(15, 15), sigma=3)
-# find_and_plot_gauge(img, detect)
-find_and_plot_needle(img, detect)
+img_1 = cv.imread('example/1.png', 0)
+img_2 = cv.imread('example/2.png', 0)
 
-# blur is cranked up too high?
+detect_1 = Detect(kernel=(9, 9), sigma=3, threshold=125)  # known good params for example/1.png
+detect_2 = Detect(kernel=(15, 15), sigma=2, threshold=175)  # known good params for example/2.png
+
+# find_and_plot_gauge(img, detect)
+find_and_plot_needle(img_1, detect_1, fname='test 1.png')
+find_and_plot_needle(img_2, detect_2, fname='test 2.png')

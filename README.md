@@ -94,11 +94,12 @@ Results in a binary image (2 color).
 - [tutorial\_py\_canny](https://docs.opencv.org/4.x/da/d22/tutorial_py_canny.html)
 - [cv2.Canny()](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga04723e007ed888ddf11d9ba04e2232de)
 
-### Line Detection (needle detection)
+### Linear Hough Transform (needle detection)
 
 Line detection is being done specifically to detect the angle (in Q1) and  orientation.
 
-Currently using cv2.HoughLines, eventually expect to move to cv2.HoughLineP for performance reasons.
+Currently using cv2.HoughLines, although the open cv docs claim HoughLinesP is more efficient I did not observe significant time savings when switching to 
+the probabilistic version of the transform, in fact run time increased on average.
 
 - [tutorial\_hough\_lines](https://docs.opencv.org/3.4/d9/db0/tutorial_hough_lines.html)
 - [cv2.HoughLines()](https://docs.opencv.org/3.4/dd/d1a/group__imgproc__feature.html#ga46b4e588934f6c8dfd509cc6e0e4545a)

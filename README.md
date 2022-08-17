@@ -41,46 +41,7 @@ With a Detection object and pressure look up table, real time usage is simply ap
 
 With some level of detail I describe the steps required to process a single frame (image) containing a pressure gauge and read it's current value.
 
-```dot
-digraph G {
-	graph [layout=dot rankdir=LR]
-	raw [label=<
-			<table border="0" cellspacing="5">
-			<tr><td><b>raw image</b></td></tr>
-		</table>> shape=box];
-	cht [label=<
-			<table border="0" cellspacing="5">
-			<tr><td><b>Circle Hough Transform</b></td></tr>
-			<tr><td port="1">cv2.HoughCircles</td></tr>
-		</table>> shape=box];
-	crop [label=<
-			<table border="0" cellspacing="5">
-			<tr><td><b>Crop</b></td></tr>
-			<tr><td port="1">Use the parameters from CHT</td></tr>
-		</table>> shape=box];
-	blur [label=<
-			<table border="0" cellspacing="5">
-			<tr><td><b>Blur</b></td></tr>
-			<tr><td port="1">cv2.GaussianBlur</td></tr>
-		</table>> shape=box];
-	edge_detect [label=<
-			<table border="0" cellspacing="5">
-			<tr><td><b>Edge Detection</b></td></tr>
-			<tr><td port="1">cv2.Canny</td></tr>
-		</table>> shape=box];
-	lht [label=<
-			<table border="0" cellspacing="5">
-			<tr><td><b>Linear Hough Transform</b></td></tr>
-			<tr><td port="1">cv2.HoughLines</td></tr>
-		</table>> shape=box];
-
-	raw -> cht
-	cht -> crop
-	crop -> blur
-	blur -> edge_detect
-	edge_detect -> lht
-}
-```
+![image processing diagram](https://imgur.com/JNz5G4I.png)
 
 - Compute the spatial position of the gauge (x, y, r)
 - Crop the image to the gauge using (x, y, r)

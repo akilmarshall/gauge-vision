@@ -77,6 +77,8 @@ Using the cv2.HoughCircles implementation.
 - [tutorial\_py\_houghcircles](https://docs.opencv.org/4.x/da/d53/tutorial_py_houghcircles.html)
 - [cv2.HoughCircles()](https://docs.opencv.org/4.x/dd/d1a/group__imgproc__feature.html#ga47849c3be0d0406ad3ca45db65a25d2d)
 
+[stack overflow thread](https://dsp.stackexchange.com/questions/22648/in-opecv-function-hough-circles-how-does-parameter-1-and-2-affect-circle-detecti) describing CHT parameters intuitively.
+
 ### Crop
 
 Using the spatial data acquired in the previous step the image is cropped (simplifying the line detection problem and reducing the load on subsequent image processing steps).

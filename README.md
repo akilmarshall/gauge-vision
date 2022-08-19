@@ -2,6 +2,9 @@
 
 Several video feeds of similar pressure gauges in operation will be available, the goal is to write software capable of turing that video stream into a stream of values representing the pressure readings of the gauge. 
 
+Ultimately the work in this repo will update a variable in the EPICS/DRAMA systems representing some compressor. 
+Thus the run time of the algorithm should be reduced as much as possible and can be used as a measure of success when comparing algorithms or implementations.
+
 <p align="center">
 <img src=https://imgur.com/qmYCjDS.png alt="" width="250"/>
 <img src=https://imgur.com/k0YyhoU.png alt="" width="250"/>
@@ -15,31 +18,6 @@ Several video feeds of similar pressure gauges in operation will be available, t
 
 - write an object for training, (requires detections param) computes look up table
 - write an object that uses the look up table (requires detections param) and computes pressures from images
-
-## High Level Implementation Concerns
-
-Ultimately the work in this repo will update a variable in the EPICS/DRAMA systems representing some compressor. 
-Thus the run time of the algorithm should be reduced as much as possible and can be used as a measure of success when comparing algorithms or implementations.
-
-## Operation Description
-
-Instead of processing a video stream instead consider processing a single image as quickly as possible even if video data is available.
-
-## Detect (object)
-
-This object encapsulates the environmentally sensitive parameters related to image pre processing steps as well as the Hough transform applied.
-
-Allows a set of _good_ parameters to be reused/communicated. 
-
-## Training
-
-The goal of training is to produce a look up table (theta -> pressure), I believe more information is necessary since theta is in (0, pi) Hough space.
-Perhaps the look up table (r, theta) -> pressure is ok?
-Currently it is (\_, theta) -> pressure.
-
-### look up table
-
-- Implemented as a dict?
 
 ## Operation
 
